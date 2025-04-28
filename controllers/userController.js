@@ -9,7 +9,7 @@ function generateReferralCode() {
 
 
 const signupUser = async (req, res) => {
-  const { username, email, password, passkey } = req.body;
+  const { firstName, lastName, phoneContact, username, email, password, passkey } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -18,6 +18,9 @@ const signupUser = async (req, res) => {
     }
 
     const newUser = new User({
+      firstName,
+      lastName,
+      phoneContact,
       username,
       email,
       password: '',
