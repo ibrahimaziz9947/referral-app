@@ -1,7 +1,7 @@
 # Referral App
 
 ## Project Description
-This is a referral system built with Node.js, Express, and MongoDB. Users can sign up, generate a unique referral code, and refer others using the referral code. The app also handles password reset functionality
+This is a referral software built with Node.js, Express, and MongoDB. Users can sign up, generate a unique referral code, and refer others using the referral code. The app also handles password reset functionality
 
 ## Setup Instructions
 To set up and run the project, follow these steps:
