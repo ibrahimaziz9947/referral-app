@@ -4,7 +4,7 @@ const RechargeRequest = require('../models/rechargeRequest');
 // User: Request recharge
 const requestRecharge = async (req, res) => {
   const { amount, proof } = req.body;
-  const userId = req.userId; // We'll get userId from token (assume it's extracted from middleware)
+  const userId = req.user._id; // Get userId from the authenticated user
 
   try {
     const rechargeRequest = new RechargeRequest({
@@ -18,7 +18,7 @@ const requestRecharge = async (req, res) => {
     res.status(201).json({ message: 'Recharge request submitted successfully' });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -36,7 +36,8 @@ const reviewRecharge = async (req, res) => {
 
     if (status === 'approved') {
       rechargeRequest.status = 'approved';
-      rechargeRequest.user.walletBalance += rechargeRequest.amount;
+      // Update the wallet field instead of walletBalance
+      rechargeRequest.user.wallet += rechargeRequest.amount;
       await rechargeRequest.user.save();
     } else {
       rechargeRequest.status = 'rejected';
@@ -44,10 +45,16 @@ const reviewRecharge = async (req, res) => {
 
     await rechargeRequest.save();
 
-    res.status(200).json({ message: `Recharge request ${status}` });
+    res.status(200).json({ 
+      message: `Recharge request ${status}`,
+      user: {
+        _id: rechargeRequest.user._id,
+        wallet: rechargeRequest.user.wallet
+      }
+    });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -58,7 +65,7 @@ const viewAllRechargeRequests = async (req, res) => {
     res.status(200).json(rechargeRequests);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ message: error.message });
   }
 };
 

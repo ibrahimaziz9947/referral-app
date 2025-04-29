@@ -363,28 +363,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### Review Recharge Request (Admin Only)
-```
-POST /api/wallet/admin/review-recharge/:requestId
-```
-**Headers:**
-```
-Authorization: Bearer <token>
-```
-**Request Body:**
-```json
-{
-  "status": "approved"  // or "rejected"
-}
-```
-**Response:**
-```json
-{
-  "message": "Recharge request approved"
-}
-```
-
-#### View All Recharge Requests (Admin Only)
+#### Get All Recharge Requests (Admin Only)
 ```
 GET /api/wallet/admin/recharge-requests
 ```
@@ -409,53 +388,65 @@ Authorization: Bearer <token>
 ]
 ```
 
+#### Review Recharge Request (Admin Only)
+```
+POST /api/wallet/admin/review-recharge/:requestId
+```
+**Headers:**
+```
+Authorization: Bearer <token>
+```
+**Request Body:**
+```json
+{
+  "status": "approved"  // or "rejected"
+}
+```
+**Response:**
+```json
+{
+  "message": "Recharge request approved",
+  "user": {
+    "_id": "user_id",
+    "wallet": 600
+  }
+}
+```
+
 ## Setup Instructions
 
 1. Clone the repository
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file with the following variables:
    ```
    MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
-   PORT=8000
+   JWT_SECRET=your_jwt_secret
    ```
 4. Start the server:
+   ```bash
+   npm start
    ```
-   node server.js
-   ```
 
-## Testing the Application
+## Environment Variables
 
-1. Create an admin account using the `/api/auth/signup` endpoint with `isAdmin: true`
-2. Create a regular user account using the `/api/auth/signup` endpoint
-3. Log in with both accounts to get their JWT tokens
-4. As an admin, create tasks using the `/api/tasks` endpoint
-5. As a regular user, view available tasks and submit completions
-6. As an admin, review submissions and approve them
-7. Verify that the user's wallet is updated with the reward amount
+- `MONGO_URI`: MongoDB connection string
+- `JWT_SECRET`: Secret key for JWT token generation
 
-## Authentication
+## Features
 
-All endpoints except registration and login require a valid JWT token in the Authorization header:
-```
-Authorization: Bearer <token>
-```
-
-## Error Handling
-
-The API returns appropriate HTTP status codes and error messages:
-- 400: Bad Request (invalid input)
-- 401: Unauthorized (missing or invalid token)
-- 403: Forbidden (insufficient permissions)
-- 404: Not Found (resource doesn't exist)
-- 500: Server Error (internal server error)
+- User authentication with JWT
+- Role-based access control (Admin/User)
+- Task management system
+- Wallet management with recharge requests
+- Automatic wallet updates
+- Referral system
 
 ## Security
 
-- Passwords are hashed using bcrypt
-- JWT tokens are used for authentication
-- Admin routes are protected with additional middleware
-- Sensitive user data is not exposed in responses
+- JWT-based authentication
+- Password hashing with bcrypt
+- Role-based middleware protection
+- Secure password reset with passkey
