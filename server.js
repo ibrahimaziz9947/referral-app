@@ -17,6 +17,7 @@ const authRoutes = require('./routes/auth');
 const connectDB = require('./databases/db');
 const walletRoutes = require('./routes/wallet');
 const taskRoutes = require('./routes/taskRoutes');
+const investmentRoutes = require('./routes/investmentRoutes');
 
 const app = express();
 
@@ -25,8 +26,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/wallet', walletRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/wallet', walletRoutes);
+app.use('/api/investments', investmentRoutes);
 
 // Test endpoint for JWT verification
 app.post('/api/test-token', (req, res) => {
