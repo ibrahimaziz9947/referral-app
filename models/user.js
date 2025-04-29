@@ -47,6 +47,14 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  wallet: {
+    type: Number,
+    default: 0
+  }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

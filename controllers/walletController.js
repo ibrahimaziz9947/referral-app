@@ -62,4 +62,14 @@ const viewAllRechargeRequests = async (req, res) => {
   }
 };
 
-module.exports = { requestRecharge, reviewRecharge, viewAllRechargeRequests };
+// Get user's wallet balance
+const getWalletBalance = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select('wallet');
+        res.json({ balance: user.wallet });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { requestRecharge, reviewRecharge, viewAllRechargeRequests, getWalletBalance };

@@ -19,7 +19,7 @@ const generateToken = (userId) => {
   }
   
   const token = jwt.sign(
-    { userId },
+    { id: userId },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
@@ -29,7 +29,7 @@ const generateToken = (userId) => {
 };
 
 const signupUser = async (req, res) => {
-  const { firstName, lastName, phoneContact, username, email, password, passkey } = req.body;
+  const { firstName, lastName, phoneContact, username, email, password, passkey, isAdmin } = req.body;
 
   try {
     // Validate required fields
@@ -54,6 +54,7 @@ const signupUser = async (req, res) => {
       password: '',
       passkey,
       referralCode: generateReferralCode(),
+      isAdmin: isAdmin || false
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -67,6 +68,7 @@ const signupUser = async (req, res) => {
       message: 'User registered successfully',
       yourReferralCode: newUser.referralCode,
       token,
+      isAdmin: newUser.isAdmin
     });
   } catch (err) {
     console.error('Signup error:', err.message);
