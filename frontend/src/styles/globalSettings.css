@@ -1,0 +1,60 @@
+:root {
+  /* Default values for site settings - these will be overridden by JavaScript */
+  --primary-color: #3b82f6;
+  --secondary-color: #10b981;
+}
+
+/* Apply theme colors to common components */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  filter: brightness(90%);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-color);
+  filter: brightness(90%);
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+
+.border-primary {
+  border-color: var(--primary-color);
+}
+
+.border-secondary {
+  border-color: var(--secondary-color);
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.bg-primary-light {
+  background-color: var(--primary-color);
+  opacity: 0.1;
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.bg-secondary-light {
+  background-color: var(--secondary-color);
+  opacity: 0.1;
+} 
